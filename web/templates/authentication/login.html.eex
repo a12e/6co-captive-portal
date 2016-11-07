@@ -1,0 +1,16 @@
+<div class="text-center">
+  <h1>Connexion</h1>
+
+  <%= form_for @conn, authentication_path(@conn, :login, url: @conn.params["url"]), [as: :login_form, name: "login-form"], fn f -> %>
+    <%= text_input f, :username, class: "input-lg", placeholder: "Utilisateur" %><br>
+    <%= password_input f, :password, class: "input-lg", placeholder: "Mot de passe" %><br>
+    <br>
+    <%= submit "S'authentifier", class: "btn btn-primary btn-lg" %>
+  <% end %>
+  
+  <p class="text-muted">
+    <%= @remote_mac %><br>
+    <%= @remote_ip %><br>
+    État du firewall : <%= if @remote_allowed do %> ouvert <% else %> fermé <% end %><br>
+  </p>
+</div> 

@@ -1,0 +1,9 @@
+<div class="jumbotron">
+  <h2>Bienvenue sur notre réseau sans fil</h2>
+  <p class="lead">Vous pouvez vous identifer à l'aide du bouton ci-dessous.</p>
+</div>
+
+<div class="text-center">
+  <a class="btn btn-primary btn-lg" href="/login">Connexion</a>
+</div>
+
