@@ -13,9 +13,13 @@ defmodule Pwc.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
-    
+
     get "/login", AuthenticationController, :show
     post "/login", AuthenticationController, :login
     get "/logout", AuthenticationController, :logout
+
+    scope "/admin", do
+      resources "/users", UserController
+    end 
   end
 end
