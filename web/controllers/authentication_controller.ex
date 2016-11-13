@@ -2,7 +2,7 @@ defmodule Pwc.AuthenticationController do
   use Pwc.Web, :controller
   alias Pwc.Connection
   alias Pwc.Firewall
-  alias Pwc.MacSolver
+  alias Pwc.IpNeighbor
   alias Pwc.User
   require Logger
 
@@ -11,9 +11,9 @@ defmodule Pwc.AuthenticationController do
   defp assign_remote_details(conn, _) do
     conn
     |> assign(:remote_ip4, conn.remote_ip)
-    |> assign(:remote_ip6, conn.remote_ip |> MacSolver.mac_of_ip4 |> MacSolver.ip6_of_mac)
-    |> assign(:remote_mac, conn.remote_ip |> MacSolver.mac_of_ip4)
-    |> assign(:remote_allowed, conn.remote_ip |> MacSolver.mac_of_ip4 |> Firewall.is_mac_allowed)
+    |> assign(:remote_ip6, conn.remote_ip |> IpNeighbor.mac_of_ip4 |> IpNeighbor.ip6_of_mac)
+    |> assign(:remote_mac, conn.remote_ip |> IpNeighbor.mac_of_ip4)
+    |> assign(:remote_allowed, conn.remote_ip |> IpNeighbor.mac_of_ip4 |> Firewall.is_mac_allowed)
   end
 
   def show(conn, _params) do

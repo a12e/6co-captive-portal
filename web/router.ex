@@ -19,6 +19,7 @@ defmodule Pwc.Router do
     get "/logout", AuthenticationController, :logout
 
     scope "/admin" do
+      get "/neighbors", NeighborController, :index
       resources "/users", UserController
     end
   end

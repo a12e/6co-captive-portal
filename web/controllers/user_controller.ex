@@ -5,8 +5,8 @@ defmodule Pwc.UserController do
 
   def index(conn, _params) do
     users = User
-    |> join(:left, [u], c in assoc(u, :connections))
-    |> preload(:connections)
+    # |> join(:left, [u], c in assoc(u, :connections))
+    # |> preload(:connections)
     |> Repo.all
     render(conn, "index.html", users: users)
   end

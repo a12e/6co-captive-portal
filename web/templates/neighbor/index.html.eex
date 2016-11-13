@@ -1,0 +1,25 @@
+<table class="table">
+
+  <thead>
+    <th>Adresse MAC</th>
+    <th>Adresse IPv4</th>
+    <th>Adresse IPv6</th>
+    <th>Nom d'hôte</th>
+    <th>Autorisé</th>
+  </thead>
+
+  <tbody>
+
+    <%= for {mac, ipv4, ipv6, hostname, allowed} <- @wlan_neighbors do %>
+      <tr>
+        <td><%= mac %></td>
+        <td><%= ipv4 %></td>
+        <td><%= ipv6 %></td>
+        <td><%= hostname %></td>
+        <td><%= if allowed do %><span class="text-success">Oui</span><% else %><span class="text-danger">Non</span><% end %></td>
+      </tr>
+    <% end %>
+
+  </tbody>
+
+</table>

@@ -4,10 +4,7 @@
   <thead>
     <tr>
       <th>Nom d'utilisateur</th>
-      <th>Dernière connexion</th>
-      <td>Adresse MAC</td>
-      <td>Adresse IPv4</td>
-      <td>Adresse IPv6</td>
+
       <th></th>
     </tr>
   </thead>
@@ -15,10 +12,7 @@
 <%= for user <- @users do %>
     <tr>
       <td><%= link user.username, to: user_path(@conn, :show, user), class: "btn btn-link" %></td>
-      <td><%= user.connection.inserted_at %></td>
-      <td><%= user.connection.mac_addr %></td>
-      <td><%= user.connection.ipv4_addr %></td>
-      <td><%= user.connection.ipv6_addr %></td>
+
 
       <td class="text-right">
         <%= link "Show", to: user_path(@conn, :show, user), class: "btn btn-default btn-xs" %>
@@ -30,4 +24,4 @@
   </tbody>
 </table>
 
-<%= link "Nouvel utilisateur", to: user_path(@conn, :new) %>
+<%= link "Nouvel utilisateur", to: user_path(@conn, :new), class: "btn btn-default" %>
