@@ -1,6 +1,7 @@
 <div class="jumbotron">
-  <h2>Bienvenue sur notre réseau sans fil</h2>
-  <p class="lead">Vous pouvez vous identifer à l'aide du bouton ci-dessous.</p>
+  <img src="/images/6co.png">
+  <h2>Bienvenue sur 6co</h2>
+  <p class="lead">votre fournisseur préféré de connectivité WiFi IPv6</p>
 </div>
 
 <div class="text-center">

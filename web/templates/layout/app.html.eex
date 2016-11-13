@@ -13,10 +13,12 @@
 
   <body>
     <div class="container">
-      <header class="header">
-        <nav role="navigation">
-          <ul class="nav nav-pills pull-right">
-            <li><a href="<%= page_path(@conn, :index) %>">Accueil</a></li>
+      <header>
+        <nav role="navigation" class="navbar">
+          <a class="navbar-brand navbar-left" href="<%= page_path(@conn, :index) %>">
+            <img alt="Brand" class="logo" src="/images/6co.png">
+          </a>
+          <ul class="nav nav-pills navbar-right">
             <li><a href="<%= authentication_path(@conn, :login) %>">Connexion</a></li>
             <li><a href="<%= authentication_path(@conn, :logout) %>">Déconnexion</a></li>
           </ul>
