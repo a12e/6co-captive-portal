@@ -1,0 +1,29 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= label f, :mac_addr, class: "control-label" %>
+    <%= text_input f, :mac_addr, class: "form-control" %>
+    <%= error_tag f, :mac_addr %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :ipv4_addr, class: "control-label" %>
+    <%= text_input f, :ipv4_addr, class: "form-control" %>
+    <%= error_tag f, :ipv4_addr %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :ipv6_addr, class: "control-label" %>
+    <%= text_input f, :ipv6_addr, class: "form-control" %>
+    <%= error_tag f, :ipv6_addr %>
+  </div>
+
+  <div class="form-group">
+    <%= submit "Submit", class: "btn btn-primary" %>
+  </div>
+<% end %>

@@ -4,7 +4,10 @@ defmodule Pwc.UserController do
   alias Pwc.User
 
   def index(conn, _params) do
-    users = Repo.all(User)
+    users = User
+    |> join(:left, [u], c in assoc(u, :connections))
+    |> preload(:connections)
+    |> Repo.all
     render(conn, "index.html", users: users)
   end
 
@@ -19,7 +22,7 @@ defmodule Pwc.UserController do
     case Repo.insert(changeset) do
       {:ok, _user} ->
         conn
-        |> put_flash(:info, "User created successfully.")
+        |> put_flash(:info, "L'utilisateur a été créé avec succès")
         |> redirect(to: user_path(conn, :index))
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
@@ -27,7 +30,9 @@ defmodule Pwc.UserController do
   end
 
   def show(conn, %{"id" => id}) do
-    user = Repo.get!(User, id)
+    user = User
+    |> Repo.get!(id)
+    |> Repo.preload(:connections)
     render(conn, "show.html", user: user)
   end
 
@@ -44,7 +49,7 @@ defmodule Pwc.UserController do
     case Repo.update(changeset) do
       {:ok, user} ->
         conn
-        |> put_flash(:info, "User updated successfully.")
+        |> put_flash(:info, "L'utilisateur a bien été mis à jour.")
         |> redirect(to: user_path(conn, :show, user))
       {:error, changeset} ->
         render(conn, "edit.html", user: user, changeset: changeset)
@@ -59,7 +64,7 @@ defmodule Pwc.UserController do
     Repo.delete!(user)
 
     conn
-    |> put_flash(:info, "User deleted successfully.")
+    |> put_flash(:info, "L'utilisateur a été supprimé avec succès.")
     |> redirect(to: user_path(conn, :index))
   end
 end

@@ -7,10 +7,14 @@
     <br>
     <%= submit "S'authentifier", class: "btn btn-primary btn-lg" %>
   <% end %>
-  
+
   <p class="text-muted">
     <%= @remote_mac %><br>
-    <%= @remote_ip %><br>
+    <%= @remote_ip4  |> :inet.ntoa %><br>
+    <%= case @remote_ip6 do
+      {:error, _} -> "IPv6 inconnue"
+      ipv6 -> ipv6 |> :inet.ntoa
+    end %><br>
     État du firewall : <%= if @remote_allowed do %> ouvert <% else %> fermé <% end %><br>
   </p>
-</div> 
+</div>

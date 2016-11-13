@@ -1,0 +1,32 @@
+<h2>Listing connections</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Mac addr</th>
+      <th>Ipv4 addr</th>
+      <th>Ipv6 addr</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for connections <- @connections do %>
+    <tr>
+      <td><%= connections.user_id %></td>
+      <td><%= connections.mac_addr %></td>
+      <td><%= connections.ipv4_addr %></td>
+      <td><%= connections.ipv6_addr %></td>
+
+      <td class="text-right">
+        <%= link "Show", to: connections_path(@conn, :show, connections), class: "btn btn-default btn-xs" %>
+        <%= link "Edit", to: connections_path(@conn, :edit, connections), class: "btn btn-default btn-xs" %>
+        <%= link "Delete", to: connections_path(@conn, :delete, connections), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<%= link "New connections", to: connections_path(@conn, :new) %>

@@ -6,6 +6,8 @@ defmodule Pwc.User do
     field :password, :string, virtual: true
     field :encrypted_password, :string
 
+    has_many :connections, Pwc.Connection
+
     timestamps()
   end
 

@@ -1,0 +1,28 @@
+<h2>Show connections</h2>
+
+<ul>
+
+  <li>
+    <strong>User:</strong>
+    <%= @connections.user_id %>
+  </li>
+
+  <li>
+    <strong>Mac addr:</strong>
+    <%= @connections.mac_addr %>
+  </li>
+
+  <li>
+    <strong>Ipv4 addr:</strong>
+    <%= @connections.ipv4_addr %>
+  </li>
+
+  <li>
+    <strong>Ipv6 addr:</strong>
+    <%= @connections.ipv6_addr %>
+  </li>
+
+</ul>
+
+<%= link "Edit", to: connections_path(@conn, :edit, @connections) %>
+<%= link "Back", to: connections_path(@conn, :index) %>

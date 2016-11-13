@@ -1,0 +1,6 @@
+<h2>New connections</h2>
+
+<%= render "form.html", changeset: @changeset,
+                        action: connections_path(@conn, :create) %>
+
+<%= link "Back", to: connections_path(@conn, :index) %>

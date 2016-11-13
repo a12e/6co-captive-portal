@@ -9,5 +9,28 @@
 
 </ul>
 
-<%= link "Edit", to: user_path(@conn, :edit, @user) %>
-<%= link "Back", to: user_path(@conn, :index) %>
+<%= link "Éditer", to: user_path(@conn, :edit, @user) %> &nbsp;
+<%= link "Retour à la liste", to: user_path(@conn, :index) %>
+
+<h3>Historique des connexions</h3>
+
+<table class="table">
+  <thead>
+    <tr>
+      <td>Horodatage</td>
+      <td>Adresse MAC</td>
+      <td>Adresse IPv4</td>
+      <td>Adresse IPv6</td>
+    </tr>
+  </thead>
+  <tbody>
+    <%= for connection <- @user.connections do %>
+      <tr>
+        <td><%= connection.inserted_at %></td>
+        <td><%= connection.mac_addr %></td>
+        <td><%= connection.ipv4_addr %></td>
+        <td><%= connection.ipv6_addr %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

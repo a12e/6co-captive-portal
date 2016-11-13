@@ -18,8 +18,8 @@ defmodule Pwc.Router do
     post "/login", AuthenticationController, :login
     get "/logout", AuthenticationController, :logout
 
-    scope "/admin", do
+    scope "/admin" do
       resources "/users", UserController
-    end 
+    end
   end
 end
