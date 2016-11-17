@@ -1,24 +1,28 @@
 <table class="table">
 
   <thead>
-    <th>Adresse MAC</th>
-    <th>Adresse IPv4</th>
-    <th>Adresse IPv6</th>
-    <th>Nom d'hôte</th>
-    <th>Utilisateur</th>
-    <th>Autorisé</th>
+    <tr>
+      <th>Adresse MAC</th>
+      <th>Adresse IPv4</th>
+      <th>Adresse IPv6</th>
+      <th>Nom d'hôte</th>
+      <th>Utilisateur</th>
+      <th>Autorisé</th>
+      <th>Dernière authentification (UTC)</th>
+    </tr>
   </thead>
 
   <tbody>
 
-    <%= for {mac, ipv4, ipv6, hostname, allowed, user} <- @wlan_neighbors do %>
+    <%= for {mac, ipv4, ipv6, hostname, allowed, user, last_connection} <- @wlan_neighbors do %>
       <tr>
         <td><%= mac %></td>
         <td><a href="http://<%= @eth_ip4 %>:3000/lua/host_details.lua?host=<%= ipv4 %>"><%= ipv4 %></a></td>
         <td><a href="http://<%= @eth_ip4 %>:3000/lua/host_details.lua?host=<%= ipv6 %>"><%= ipv6 %></td>
         <td><a href="http://<%= hostname %>"><%= hostname %></a></td>
         <td><%= link user.username, to: user_path(@conn, :show, user) %></td>
-        <td><%= if allowed do %><span class="text-success">Oui</span><% else %><span class="text-danger">Non</span><% end %></td>
+        <td><b><%= if allowed do %><span class="text-success">OUI</span><% else %><span class="text-danger">NON</span><% end %></b></td>
+        <td><%= last_connection.inserted_at %></td>
       </tr>
     <% end %>
 

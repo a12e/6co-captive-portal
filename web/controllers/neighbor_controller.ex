@@ -17,19 +17,20 @@ defmodule Pwc.NeighborController do
           {:error, _} -> ""
         end
 
-        user = Connection
+        {user, last_connection} = Connection
         |> where([c], c.mac_addr == ^mac)
         |> order_by([c], [desc: c.inserted_at])
         |> limit(1)
         |> join(:inner, [c], u in assoc(c, :user))
-        |> select([c, u], u)
+        |> select([c, u], {u, c})
         |> Repo.one
 
-        {mac, ipv4, ipv6, hostname, mac |> Firewall.is_mac_allowed, user}
+        {mac, ipv4, ipv6, hostname, mac |> Firewall.is_mac_allowed, user, last_connection}
       end)
 
     conn
     |> assign(:eth_ip4, Interface.eth_ip4 |> :inet.ntoa |> to_string)
+    |> put_resp_header("refresh", "2")
     |> render("index.html", wlan_neighbors: rich_wlan_neighbors)
   end
 

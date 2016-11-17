@@ -1,26 +1,17 @@
-<h2>Afficher un utilisateur</h2>
+<h2>Détails sur l'utilisateur <%= @user.username %></h2>
 
-<ul>
-
-  <li>
-    <strong>Username:</strong>
-    <%= @user.username %>
-  </li>
-
-</ul>
-
-<%= link "Éditer", to: user_path(@conn, :edit, @user) %> &nbsp;
-<%= link "Retour à la liste", to: user_path(@conn, :index) %>
+<%= link "← Retour à la liste", to: user_path(@conn, :index) %> &nbsp;
+<%= link "Éditer", to: user_path(@conn, :edit, @user) %>
 
 <h3>Historique des connexions</h3>
 
 <table class="table">
   <thead>
     <tr>
-      <td>Horodatage</td>
-      <td>Adresse MAC</td>
-      <td>Adresse IPv4</td>
-      <td>Adresse IPv6</td>
+      <th>Horodatage (UTC)</th>
+      <th>Adresse MAC</th>
+      <th>Adresse IPv4</th>
+      <th>Adresse IPv6</th>
     </tr>
   </thead>
   <tbody>

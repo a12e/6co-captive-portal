@@ -33,13 +33,18 @@ defmodule Pwc.AuthenticationController do
                   conn = conn
                   |> Pwc.FetchPeerInfo.call(nil)
 
+                  ipv6 = case conn.assigns[:remote_ip6] do
+                    nil -> ""
+                    ip6 -> ip6 |> :inet.ntoa |> to_string
+                  end
+
                   # log the connection
                   user
                   |> Ecto.build_assoc(:connections)
                   |> Connection.changeset(%{
                     mac_addr: conn.assigns[:remote_mac],
                     ipv4_addr: conn.assigns[:remote_ip4] |> :inet.ntoa |> to_string,
-                    ipv6_addr: conn.assigns[:remote_ip6] |> :inet.ntoa |> to_string
+                    ipv6_addr: ipv6
                   })
                   |> Repo.insert!
 
