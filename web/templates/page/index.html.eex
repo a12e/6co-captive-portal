@@ -5,6 +5,9 @@
 </div>
 
 <div class="text-center">
-  <a class="btn btn-primary btn-lg" href="/login">Connexion</a>
+  <%= if @remote_allowed do %>
+    <a class="btn btn-primary btn-lg" href="/logout">Déconnexion</a>
+  <% else %>
+    <a class="btn btn-primary btn-lg" href="/login">Connexion</a>
+  <% end %>
 </div>
-

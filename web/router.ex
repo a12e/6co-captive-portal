@@ -7,8 +7,9 @@ defmodule Pwc.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug Pwc.FetchPeerInfo
   end
-  
+
   pipeline :admin do
     plug Pwc.AdminFirewall
   end
@@ -24,7 +25,7 @@ defmodule Pwc.Router do
 
     scope "/admin" do
       pipe_through :admin
-    
+
       get "/neighbors", NeighborController, :index
       resources "/users", UserController
     end

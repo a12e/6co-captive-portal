@@ -6,16 +6,6 @@ defmodule Pwc.AuthenticationController do
   alias Pwc.User
   require Logger
 
-  plug :assign_remote_details
-
-  defp assign_remote_details(conn, _) do
-    conn
-    |> assign(:remote_ip4, conn.remote_ip)
-    |> assign(:remote_ip6, conn.remote_ip |> IpNeighbor.mac_of_ip4 |> IpNeighbor.ip6_of_mac)
-    |> assign(:remote_mac, conn.remote_ip |> IpNeighbor.mac_of_ip4)
-    |> assign(:remote_allowed, conn.remote_ip |> IpNeighbor.mac_of_ip4 |> Firewall.is_mac_allowed)
-  end
-
   def show(conn, _params) do
     conn
     |> render("login.html")

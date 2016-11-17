@@ -18,10 +18,21 @@
           <a class="navbar-brand navbar-left" href="<%= page_path(@conn, :index) %>">
             <img alt="Brand" class="logo" src="/images/6co.png">
           </a>
-          <ul class="nav nav-pills navbar-right">
-            <li><a href="<%= authentication_path(@conn, :login) %>">Connexion</a></li>
-            <li><a href="<%= authentication_path(@conn, :logout) %>">Déconnexion</a></li>
-          </ul>
+          <%= if @is_admin do %>
+            <ul class="nav nav-pills navbar-right">
+              <li style="padding: 10px 15px;">Administration</li>
+              <li><a href="<%= neighbor_path(@conn, :index) %>">Stations connectées</a></li>
+              <li><a href="<%= user_path(@conn, :index) %>">Utilisateurs enregistrés</a></li>
+            </ul>
+          <% else %>
+            <ul class="nav nav-pills navbar-right">
+              <%= if ! @remote_allowed do %>
+                <li><a href="<%= authentication_path(@conn, :login) %>">Connexion</a></li>
+              <% else %>
+                <li><a href="<%= authentication_path(@conn, :logout) %>">Déconnexion</a></li>
+              <% end %>
+            </ul>
+          <% end %>
         </nav>
 
       </header>
@@ -37,12 +48,8 @@
 
       <div><br></div>
 
-      <footer class="text-center">
-        <ul class="nav nav-pills">
-          <li style="padding: 10px 15px;">Administration</li>
-          <li><a href="<%= neighbor_path(@conn, :index) %>">Stations connectées</a></li>
-          <li><a href="<%= user_path(@conn, :index) %>">Utilisateurs enregistrés</a></li>
-        </ul>
+      <footer class="text-center text-muted">
+
       </footer>
 
     </div> <!-- /container -->
