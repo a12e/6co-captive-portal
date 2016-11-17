@@ -1,5 +1,6 @@
 defmodule Pwc.NeighborController do
   alias Pwc.Firewall
+  alias Pwc.Interface
   alias Pwc.IpNeighbor
   use Pwc.Web, :controller
 
@@ -16,6 +17,7 @@ defmodule Pwc.NeighborController do
       end) 
     
     conn
+    |> assign(:eth_ip4, Interface.eth_ip4 |> :inet.ntoa |> to_string)
     |> render("index.html", wlan_neighbors: rich_wlan_neighbors)
   end
   
