@@ -5,6 +5,7 @@ defmodule Pwc.Connection do
     field :mac_addr, :string
     field :ipv4_addr, :string
     field :ipv6_addr, :string
+
     belongs_to :user, Pwc.User
 
     timestamps()

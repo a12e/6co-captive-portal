@@ -5,6 +5,7 @@ defmodule Pwc.AuthenticationController do
   alias Pwc.IpNeighbor
   alias Pwc.User
   require Logger
+  require Pwc.FetchPeerInfo
 
   def show(conn, _params) do
     conn
@@ -28,6 +29,10 @@ defmodule Pwc.AuthenticationController do
                   # allow the user in the firewall
                   Firewall.allow_mac(conn.assigns[:remote_mac])
 
+                  # Refresh user info
+                  conn = conn
+                  |> Pwc.FetchPeerInfo.call(nil)
+
                   # log the connection
                   user
                   |> Ecto.build_assoc(:connections)
@@ -50,7 +55,8 @@ defmodule Pwc.AuthenticationController do
     Firewall.disallow_mac(conn.assigns[:remote_mac])
 
     conn
+    |> Pwc.FetchPeerInfo.call(nil) # Refresh user info
     |> put_flash(:info, "Vous avez été déconnecté")
-    |> redirect(to: authentication_path(conn, :login))
+    |> redirect(to: page_path(conn, :index))
   end
 end
