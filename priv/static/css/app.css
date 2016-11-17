@@ -25,7 +25,6 @@ form.link, form.button {
 /* Custom page header */
 .logo {
   display: inline-block;
-  background-image: url("/images/logo.png");
   height: 32px;
 }
 

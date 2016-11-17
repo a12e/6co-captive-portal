@@ -1,4 +1,5 @@
 defmodule Pwc.IpNeighbor do
+  alias Pwc.Interface
 
   @spec mac_of_ip4(ip :: :inet.ip4_address) :: String.t
   def mac_of_ip4(ip) do
@@ -37,32 +38,9 @@ defmodule Pwc.IpNeighbor do
     end
   end
   
-  def wlan_mac() do
-    with {:ok, iface_list} <- :inet.getifaddrs,
-    do: iface_list |> find_wlan_mac
-  end
-  
-  defp find_wlan_mac(iface_list) do
-    case iface_list do
-      [] -> {:error, "No MAC address found"}
-      [interface | tail] ->
-        case interface do
-          {'wlan0', iface_details} -> iface_details[:hwaddr]
-          _ -> find_wlan_mac(tail)
-        end
-    end
-  end
-  
-  @spec mac_to_string(mac_addr :: [byte()]) :: String.t
-  defp mac_to_string(mac_addr) do
-    mac_addr
-    |> Enum.map(fn(byte) -> byte |> Integer.to_string(16) |> String.downcase end)
-    |> Enum.join(":")
-  end
-  
   @spec wlan_neighbors() :: [{mac :: String.t, ipv4 :: String.t, ipv6 :: String.t}]
   def wlan_neighbors() do
-    wlan_mac_str = wlan_mac |> mac_to_string
+    wlan_mac_str = Interface.wlan_mac |> Interface.mac_to_string
     
     {result, _exit_code} = System.cmd "ip", ["-4", "neighbor"]
     ipv4_stations = result
@@ -90,7 +68,7 @@ defmodule Pwc.IpNeighbor do
     # merge the ipv4 and ipv6 tuples
     ipv4_stations
     |> Enum.map(fn({mac, ipv4}) -> 
-        {_, ipv6} = Enum.find(ipv6_stations, fn({other_mac, _ipv6}) -> other_mac === mac end)
+        {_, ipv6} = Enum.find(ipv6_stations, {mac, nil}, fn({other_mac, _ipv6}) -> other_mac === mac end)
         {mac, ipv4, ipv6}
       end)
   end
