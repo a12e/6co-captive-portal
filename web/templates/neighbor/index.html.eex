@@ -20,9 +20,9 @@
         <td><a href="http://<%= @eth_ip4 %>:3000/lua/host_details.lua?host=<%= ipv4 %>"><%= ipv4 %></a></td>
         <td><a href="http://<%= @eth_ip4 %>:3000/lua/host_details.lua?host=<%= ipv6 %>"><%= ipv6 %></td>
         <td><a href="http://<%= hostname %>"><%= hostname %></a></td>
-        <td><%= link user.username, to: user_path(@conn, :show, user) %></td>
+        <td><%= if user do %><%= link user.username, to: user_path(@conn, :show, user) %><% else %>anonyme<% end %></td>
         <td><b><%= if allowed do %><span class="text-success">OUI</span><% else %><span class="text-danger">NON</span><% end %></b></td>
-        <td><%= last_connection.inserted_at %></td>
+        <td><%= if last_connection do %><%= last_connection.inserted_at %><% end %></td>
       </tr>
     <% end %>
 

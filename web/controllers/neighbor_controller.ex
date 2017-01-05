@@ -17,7 +17,7 @@ defmodule Pwc.NeighborController do
           {:error, _} -> ""
         end
 
-        {user, last_connection} = Connection
+        result = Connection
         |> where([c], c.mac_addr == ^mac)
         |> order_by([c], [desc: c.inserted_at])
         |> limit(1)
@@ -25,7 +25,10 @@ defmodule Pwc.NeighborController do
         |> select([c, u], {u, c})
         |> Repo.one
 
-        {mac, ipv4, ipv6, hostname, mac |> Firewall.is_mac_allowed, user, last_connection}
+        case result do
+          {user, last_connection} -> {mac, ipv4, ipv6, hostname, mac |> Firewall.is_mac_allowed, user, last_connection}
+          nil -> {mac, ipv4, ipv6, hostname, mac |> Firewall.is_mac_allowed, nil, nil}
+        end
       end)
 
     conn

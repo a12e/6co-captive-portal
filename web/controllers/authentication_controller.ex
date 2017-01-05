@@ -33,9 +33,9 @@ defmodule Pwc.AuthenticationController do
                   conn = conn
                   |> Pwc.FetchPeerInfo.call(nil)
 
-                  ipv6 = case conn.assigns[:remote_ip6] do
-                    nil -> ""
-                    ip6 -> ip6 |> :inet.ntoa |> to_string
+                  ipv6 = case conn.assigns[:remote_ip6] |> :inet.ntoa do
+                    {:error, _} -> ""
+                    ip6 -> ip6  |> to_string
                   end
 
                   # log the connection
