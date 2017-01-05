@@ -1,0 +1,34 @@
+# interfaces(5) file used by ifup(8) and ifdown(8)
+
+# Please note that this file is written to be used with dhcpcd
+# For static IP, consult /etc/dhcpcd.conf and 'man dhcpcd.conf'
+
+# Include files from /etc/network/interfaces.d:
+source-directory /etc/network/interfaces.d
+
+# LOOPBACK
+auto lo
+iface lo inet loopback
+
+# ETHERNET
+iface eth0 inet dhcp
+
+# HURRICANE ELECTRIC 6TO4
+auto he-ipv6
+iface he-ipv6 inet6 v4tunnel
+    address 2001:470:1f12:784::2
+    netmask 64
+    endpoint 216.66.84.42
+    gateway 2001:470:1f12:784::1
+    dns-nameservers 2001:470:20::2 74.82.42.42
+    ttl 255
+
+# WIFI
+allow-hotplug wlan0
+iface wlan0 inet static
+    address 172.16.0.254
+    netmask 24
+iface wlan0 inet6 static
+    address 2001:470:1f13:784::1000
+    netmask 64
+
